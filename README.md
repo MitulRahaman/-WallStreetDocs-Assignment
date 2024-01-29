@@ -25,8 +25,6 @@ Installation
 Features
 ##########
 
-1. Attendance
-2. Leave Management
 
 Version 1.0
 =============
