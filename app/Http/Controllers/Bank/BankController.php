@@ -22,7 +22,11 @@ class BankController extends Controller
 
     public function getTableData()
     {
-        return $this->bankService->getTableData();
+        try {
+            return $this->bankService->getTableData();
+        } catch (Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
     public function display()
@@ -47,6 +51,23 @@ class BankController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        View::share('sub_menu', 'create');
+        $account = $this->bankService->edit($id);
+        return view('backend.pages.bank.edit', compact('account'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $this->bankService->update($request, $id);
+            return redirect('bank/display')->with('success', 'Account updated successfully');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+    }
+
     public function delete($id)
     {
         try{
@@ -67,28 +88,9 @@ class BankController extends Controller
         return \view('backend.pages.branch.create');
     }
 
-    public function edit($id)
-    {
-        dd(1);
-        try {
-            $data = $this->branchService->editBranch($id);
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-        return \view('backend.pages.branch.edit', compact('data'));
-    }
 
-    public function update(BranchUpdateRequest $request, $id)
-    {
-        dd(1);
-        try {
-            if(!$this->branchService->updateBranch($request, $id))
-                return redirect('branch')->with('error', 'Failed to update branch');
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-        return redirect('/branch')->with('success', 'Branch updated successfully');
-    }
+
+
 
     public function updatedata(Request $request)
     {

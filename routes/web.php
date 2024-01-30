@@ -22,8 +22,8 @@ Route::group(['middleware'=> 'auth'], function() {
         Route::get('/create', [BankController::class, 'create'])->name('create');
         Route::post('/store', [BankController::class, 'store'])->name('store');
         Route::get('/display', [BankController::class, 'display'])->name('display');
-        Route::get('/edit', [BankController::class, 'edit'])->name('edit');
-        Route::patch('/update', [BankController::class, 'update'])->name('update');
+        Route::get('{id}/edit', [BankController::class, 'edit'])->name('edit');
+        Route::patch('/update/{id}', [BankController::class, 'update'])->name('update');
         Route::post('{id}/delete', [BankController::class, 'delete'])->name('delete');
         Route::post('/deposit', [BankController::class, 'deposit'])->name('deposit');
         Route::get('/withdraw', [BankController::class, 'withdraw'])->name('withdraw');

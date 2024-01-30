@@ -63,6 +63,16 @@ class BankRepository
         ]);
     }
 
+    public function edit()
+    {
+        return DB::table('banks')->where('id', $this->id)->first();
+    }
+
+    public function update()
+    {
+        return DB::table('banks')->where('id', $this->id)->update(array('name' => $this->name));
+    }
+
     public function delete()
     {
         return DB::table('banks')->where('id', $this->id)->delete();
@@ -72,21 +82,5 @@ class BankRepository
     {
         return DB::table('banks')->get();
     }
-
-
-
-    // public function editBranch($id)
-    // {
-    //     return Branch::find($id);
-    // }
-
-    // public function updateBranch($data, $id)
-    // {
-    //     $branch = Branch::find($id);
-    //     return $branch->update($data->validated());
-    // }
-
-
-
 
 }

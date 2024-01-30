@@ -25,6 +25,19 @@ class BankService
             ->store();
     }
 
+    public function edit($id)
+    {
+        return $this->bankRepository->setId($id)->edit();
+    }
+
+    public function update($data, $id)
+    {
+        return $this->bankRepository->setId($id)
+            ->setName($data['name'])
+            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->update();
+    }
+
     public function delete($id)
     {
         return $this->bankRepository->setId($id)->delete();
@@ -43,7 +56,7 @@ class BankService
                 $date = date("d-m-Y", strtotime($row->date));
                 $balance = $row->balance;
 
-                $edit_url = url('user/'.$id.'/edit');
+                $edit_url = url('bank/'.$id.'/edit');
                 $edit_btn = "<li><a class=\"dropdown-item\" href=\"$edit_url\">Edit</a></li>";
                 $delete_btn = "<li><a class=\"dropdown-item\" href=\"javascript:void(0)\" onclick='show_delete_modal(\"$id\", \"$name\")'>Delete</a></li>";
                 $action_btn = "<div class=\"col-sm-6 col-xl-4\">
@@ -79,28 +92,6 @@ class BankService
             }';
         }
     }
-
-    // public function editBranch($id)
-    // {
-    //     return $this->branchRepository->editBranch($id);
-    // }
-
-    // public function updateBranch($data, $id)
-    // {
-    //     return $this->branchRepository->updateBranch($data, $id);
-    // }
-
-    // public function updateStatus($id)
-    // {
-    //     return $this->branchRepository->updateStatus($id);
-    // }
-
-
-
-    // public function restoreBranch($id)
-    // {
-    //     return $this->branchRepository->restoreBranch($id);
-    // }
 
     // public function validateInputs($data)
     // {
