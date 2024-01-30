@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Branch extends Model
+class Bank extends Model
 {
     use HasFactory, softDeletes;
 
-    protected $fillable = ['name', 'address', 'status'];
+    protected $fillable = ['accountType', 'name', 'account_number', 'date', 'balance'];
 
 }

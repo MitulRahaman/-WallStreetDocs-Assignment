@@ -98,9 +98,8 @@
                     </a>
                 </li>
                 <li class="nav-main-heading">User Interface</li>
-                <li class="nav-main-item {{ (strcasecmp($sub_menu, 'Create') || strcasecmp($sub_menu, 'Display') || strcasecmp($sub_menu, 'Update') ||
-                                            strcasecmp($sub_menu, 'Delete') || strcasecmp($sub_menu, 'Deposit') || strcasecmp($sub_menu, 'Withdraw') ||
-                                            strcasecmp($sub_menu, 'Search') || strcasecmp($sub_menu, 'Exit')) == 1 ? 'open' : '' }}">
+                <li class="nav-main-item {{ (strcasecmp($sub_menu, 'Create') || strcasecmp($sub_menu, 'Display') || strcasecmp($sub_menu, 'Deposit') ||
+                                            strcasecmp($sub_menu, 'Withdraw') || strcasecmp($sub_menu, 'Exit')) == 1 ? 'open' : '' }}">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                         <i class="nav-main-link-icon si si-settings"></i>
                         <span class="nav-main-link-name">System Settings</span>
@@ -117,16 +116,6 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{ strcasecmp($sub_menu, 'Update') == 0 ? 'active' : '' }}" href="{{ route('update') }}">
-                                <span class="nav-main-link-name">Update an account</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link {{ strcasecmp($sub_menu, 'Delete') == 0 ? 'active' : '' }}" href="{{ route('delete') }}">
-                                <span class="nav-main-link-name">Delete an account</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
                             <a class="nav-main-link {{ strcasecmp($sub_menu, 'Deposit') == 0 ? 'active' : '' }}" href="{{ route('deposit') }}">
                                 <span class="nav-main-link-name">Deposit an amount</span>
                             </a>
@@ -134,11 +123,6 @@
                         <li class="nav-main-item">
                             <a class="nav-main-link {{ strcasecmp($sub_menu, 'Withdraw') == 0 ? 'active' : '' }}" href="{{ route('withdraw') }}">
                                 <span class="nav-main-link-name">Withdraw an amount</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link {{ strcasecmp($sub_menu, 'Search') == 0 ? 'active' : '' }}" href="{{ route('search') }}">
-                                <span class="nav-main-link-name">Search</span>
                             </a>
                         </li>
                         <li class="nav-main-item">

@@ -18,23 +18,43 @@ class BankController extends Controller
     {
         $this->bankService = $bankService;
         View::share('main_menu', 'System Settings');
-        View::share('sub_menu', 'Branches');
+    }
+
+    public function getTableData()
+    {
+        return $this->bankService->getTableData();
+    }
+
+    public function display()
+    {
+        View::share('sub_menu', 'display');
+        return view('backend.pages.bank.index');
     }
 
     public function create()
     {
-        dd(1);
-        return \view('backend.pages.branch.create');
+        View::share('sub_menu', 'create');
+        return view('backend.pages.bank.create');
     }
-    public function display()
+
+    public function store(Request $request)
     {
-        dd(1);
-        return \view('backend.pages.branch.create');
+        try {
+            if(is_object($this->bankService->store($request)))
+            return redirect('bank/display')->with('success', 'Account created successfully');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
-    public function delete()
+
+    public function delete($id)
     {
-        dd(1);
-        return \view('backend.pages.branch.create');
+        try{
+            if($this->bankService->delete($id))
+                return redirect('bank/display')->with('success', 'Account deleted successfully');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
     public function deposit()
     {
@@ -45,22 +65,6 @@ class BankController extends Controller
     {
         dd(1);
         return \view('backend.pages.branch.create');
-    }
-    public function search()
-    {
-        dd(1);
-        return \view('backend.pages.branch.create');
-    }
-
-    public function store(BranchAddRequest $request)
-    {
-        try {
-            if(!is_object($this->branchService->storeBranch($request)))
-                return redirect('branch')->with('error', 'Failed to add branch');
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-        return redirect('branch')->with('success', 'Branch added successfully');
     }
 
     public function edit($id)
@@ -84,26 +88,6 @@ class BankController extends Controller
             return redirect()->back()->with('error', $exception->getMessage());
         }
         return redirect('/branch')->with('success', 'Branch updated successfully');
-    }
-
-    public function status($id)
-    {
-        try {
-            $this->branchService->updateStatus($id);
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', 'You need to restore the branch first');
-        }
-        return redirect()->back()->with('success', 'Status has been changed');
-    }
-
-    public function destroy($id)
-    {
-        try {
-            $this->branchService->destroyBranch($id);
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-        return redirect()->back()->with('success', 'Branch deleted successfully');
     }
 
     public function updatedata(Request $request)

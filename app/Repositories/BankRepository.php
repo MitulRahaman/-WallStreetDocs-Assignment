@@ -3,76 +3,90 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\bank;
+use App\Models\Bank;
 
 class BankRepository
 {
-    private $name;
-    // public function getAllBranchData()
-    // {
-    //     return DB::table('branches as b')
-    //         ->select('b.id', 'b.name', 'b.address', 'b.status', DB::raw('date_format(p.created_at, "%d/%m/%Y") as created_at'), DB::raw('date_format(p.deleted_at, "%d/%m/%Y") as deleted_at'))
-    //         ->get();
-    // }
+    private $id, $accountType, $name, $number, $date, $balance;
 
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+    public function setaccountType($accountType)
+    {
+        $this->accountType = $accountType;
+        return $this;
+    }
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+    public function setNumber($number)
+    {
+        $this->number = $number;
+        return $this;
+    }
+    public function setdate($date)
+    {
+        $this->date = $date;
+        return $this;
+    }
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
+        return $this;
+    }
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+        return $this;
+    }
+    public function setUpdatedAt($updated_at)
+    {
+        $this->updated_at = $updated_at;
+        return $this;
     }
 
-    public function indexBranch()
+    public function store()
     {
-        return DB::table('branches')->get();
+        $this->date = str_replace('/', '-', $this->date);
+        return Bank::create([
+            'accountType' => $this->accountType,
+            'name' => $this->name,
+            'account_number' => $this->number,
+            'date' => date("Y/m/d", strtotime($this->date)),
+            'balance' => $this->balance,
+            'created_at' => $this->created_at
+        ]);
     }
 
-    public function storeBranch($data)
+    public function delete()
     {
-       return Branch::create([
-                'name' => $data->name,
-                'address' => $data->address,
-                'status' => 1,
-       ]);
+        return DB::table('banks')->where('id', $this->id)->delete();
     }
 
-    public function editBranch($id)
+    public function getTableData()
     {
-        return Branch::find($id);
+        return DB::table('banks')->get();
     }
 
-    public function updateBranch($data, $id)
-    {
-        $branch = Branch::find($id);
-        return $branch->update($data->validated());
-    }
 
-    public function updateStatus($id)
-    {
-        $data = Branch::find($id);
-        if($data->status)
-            $data->update(array('status' => 0));
-        else
-            $data->update(array('status' => 1));
-    }
 
-    public function destroyBranch($id)
-    {
-        $data = Branch::find($id);
-        $data->update(array('status' => 0));
-        $data->delete();
-    }
+    // public function editBranch($id)
+    // {
+    //     return Branch::find($id);
+    // }
 
-    public function restoreBranch($id)
-    {
-        return DB::table('branches')->where('id', $id)->limit(1)->update(array('deleted_at' => NULL));
-    }
+    // public function updateBranch($data, $id)
+    // {
+    //     $branch = Branch::find($id);
+    //     return $branch->update($data->validated());
+    // }
 
-    public function isNameExists()
-    {
-        return DB::table('branches')->where('name', '=', $this->name)->first();
-    }
 
-    public function isNameExistsForUpdate($current_name)
-    {
-        return DB::table('branches')->where('name', '!=', $current_name)->where('name', $this->name)->first();
-    }
+
+
 }

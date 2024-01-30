@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('total_yearly_leaves', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('leave_type_id');
-            $table->foreign('leave_type_id')->references('id')->on('leave_types');
-            $table->integer('year');
-            $table->integer('total_leaves');
+            $table->string('accountType', 255);
+            $table->string('name', 255);
+            $table->unsignedInteger('account_number');
+            $table->date('date');
+            $table->unsignedInteger('balance');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('total_yearly_leaves');
+        Schema::dropIfExists('banks');
     }
 };

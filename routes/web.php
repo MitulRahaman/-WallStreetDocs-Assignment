@@ -20,12 +20,14 @@ Route::group(['middleware'=> 'auth'], function() {
 
     Route::prefix('bank')->group(function() {
         Route::get('/create', [BankController::class, 'create'])->name('create');
-        Route::post('/display', [BankController::class, 'display'])->name('display');
+        Route::post('/store', [BankController::class, 'store'])->name('store');
+        Route::get('/display', [BankController::class, 'display'])->name('display');
         Route::get('/edit', [BankController::class, 'edit'])->name('edit');
         Route::patch('/update', [BankController::class, 'update'])->name('update');
-        Route::delete('/delete', [BankController::class, 'delete'])->name('delete');
+        Route::post('{id}/delete', [BankController::class, 'delete'])->name('delete');
         Route::post('/deposit', [BankController::class, 'deposit'])->name('deposit');
         Route::get('/withdraw', [BankController::class, 'withdraw'])->name('withdraw');
         Route::post('search', [BankController::class, 'search'])->name('search');
+        Route::post('/getTableData', [BankController::class, 'getTableData'])->name('getTableData');
     });
 });
