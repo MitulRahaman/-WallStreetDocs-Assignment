@@ -95,7 +95,7 @@ class BankRepository
 
     public function getTableData()
     {
-        return DB::table('banks')->get();
+        return DB::table('banks')->latest()->get();
     }
 
     public function getBalance()

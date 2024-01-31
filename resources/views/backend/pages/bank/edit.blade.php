@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="val-balance">Balance<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="balance" name="balance" min="500" value="{{ $account->balance }}" required readonly>
+                                    <input type="number" class="form-control" id="balance" name="balance" value="{{ $account->balance }}" required readonly>
                                 </div>
                             </div>
                         </div>

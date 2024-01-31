@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Bank;
 use Validator;
 use App\Models\Bank;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AccountAddRequest;
+use App\Http\Requests\AccountUpdateRequest;
 use App\Services\BankService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -41,7 +43,7 @@ class BankController extends Controller
         return view('backend.pages.bank.create');
     }
 
-    public function store(Request $request)
+    public function store(AccountAddRequest $request)
     {
         try {
             if(is_object($this->bankService->store($request)))
@@ -58,7 +60,7 @@ class BankController extends Controller
         return view('backend.pages.bank.edit', compact('account'));
     }
 
-    public function update(Request $request, $id)
+    public function update(AccountUpdateRequest $request, $id)
     {
         try {
             $this->bankService->update($request, $id);
