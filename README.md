@@ -22,9 +22,11 @@ Installation
 8. Run `php artisan serve`
 
 ##########
-Features
+Credentials
 ##########
 
+Email: Mitul@gmail.com
+Password: welcome
 
 Version 1.0
 =============
