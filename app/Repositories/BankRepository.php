@@ -70,7 +70,17 @@ class BankRepository
 
     public function update()
     {
-        return DB::table('banks')->where('id', $this->id)->update(array('name' => $this->name));
+        return DB::table('banks')->where('id', $this->id)->update(array('name' => $this->name, 'updated_at' => $this->updated_at));
+    }
+
+    public function updateOnDeposit()
+    {
+        return DB::table('banks')->where('id', $this->id)->update(array('balance' => $this->balance, 'updated_at' => $this->updated_at));
+    }
+
+    public function updateOnWithdraw()
+    {
+        return DB::table('banks')->where('id', $this->id)->update(array('balance' => $this->balance, 'updated_at' => $this->updated_at));
     }
 
     public function delete()
@@ -78,9 +88,19 @@ class BankRepository
         return DB::table('banks')->where('id', $this->id)->delete();
     }
 
+    public function allAccounts()
+    {
+        return DB::table('banks')->get();
+    }
+
     public function getTableData()
     {
         return DB::table('banks')->get();
+    }
+
+    public function getBalance()
+    {
+        return DB::table('banks')->where('id', $this->id)->first('balance');
     }
 
 }

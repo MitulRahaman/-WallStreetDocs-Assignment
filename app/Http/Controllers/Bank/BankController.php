@@ -31,13 +31,13 @@ class BankController extends Controller
 
     public function display()
     {
-        View::share('sub_menu', 'display');
+        View::share('sub_menu', 'Display');
         return view('backend.pages.bank.index');
     }
 
     public function create()
     {
-        View::share('sub_menu', 'create');
+        View::share('sub_menu', 'Create');
         return view('backend.pages.bank.create');
     }
 
@@ -53,7 +53,7 @@ class BankController extends Controller
 
     public function edit($id)
     {
-        View::share('sub_menu', 'create');
+        View::share('sub_menu', 'Create');
         $account = $this->bankService->edit($id);
         return view('backend.pages.bank.edit', compact('account'));
     }
@@ -68,35 +68,53 @@ class BankController extends Controller
         }
     }
 
+    public function deposit()
+    {
+        $allAccounts = $this->bankService->allAccounts();
+        View::share('sub_menu', 'Deposit');
+        return view('backend.pages.bank.deposite', compact('allAccounts'));
+    }
+
+    public function updateOnDeposit(Request $request)
+    {
+        try {
+            $this->bankService->updateOnDeposit($request);
+            return redirect('bank/display')->with('success', 'Deposited successfully');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+    }
+
+    public function withdraw()
+    {
+        $allAccounts = $this->bankService->allAccounts();
+        View::share('sub_menu', 'Withdraw');
+        return view('backend.pages.bank.withdraw', compact('allAccounts'));
+    }
+
+    public function updateOnWithdraw(Request $request)
+    {
+        try {
+            if(!$this->bankService->updateOnWithdraw($request)) {
+                return redirect()->back()->with('error', 'Need to keep minimum account balance tk 100 for withdrawing');
+            }
+            return redirect('bank/display')->with('success', 'Withdrawn successfully');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+    }
+
+    public function getBalance(Request $request)
+    {
+        return $this->bankService->getBalance($request);
+    }
+
     public function delete($id)
     {
         try{
             if($this->bankService->delete($id))
                 return redirect('bank/display')->with('success', 'Account deleted successfully');
         } catch (Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-    }
-    public function deposit()
-    {
-        dd(1);
-        return \view('backend.pages.branch.create');
-    }
-    public function withdraw()
-    {
-        dd(1);
-        return \view('backend.pages.branch.create');
-    }
-
-
-
-
-
-    public function updatedata(Request $request)
-    {
-        try {
-            return $this->branchService->updateInputs($request);
-        } catch(\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
     }

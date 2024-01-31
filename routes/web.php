@@ -25,9 +25,12 @@ Route::group(['middleware'=> 'auth'], function() {
         Route::get('{id}/edit', [BankController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [BankController::class, 'update'])->name('update');
         Route::post('{id}/delete', [BankController::class, 'delete'])->name('delete');
-        Route::post('/deposit', [BankController::class, 'deposit'])->name('deposit');
+        Route::get('/deposit', [BankController::class, 'deposit'])->name('deposit');
+        Route::patch('/updateOnDeposit', [BankController::class, 'updateOnDeposit']);
         Route::get('/withdraw', [BankController::class, 'withdraw'])->name('withdraw');
+        Route::patch('/updateOnwithdraw', [BankController::class, 'updateOnwithdraw']);
         Route::post('search', [BankController::class, 'search'])->name('search');
         Route::post('/getTableData', [BankController::class, 'getTableData'])->name('getTableData');
+        Route::post('/getBalance', [BankController::class, 'getBalance'])->name('getBalance');
     });
 });

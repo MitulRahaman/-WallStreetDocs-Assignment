@@ -34,13 +34,50 @@ class BankService
     {
         return $this->bankRepository->setId($id)
             ->setName($data['name'])
-            ->setCreatedAt(date('Y-m-d H:i:s'))
+            ->setUpdatedAt(date('Y-m-d H:i:s'))
             ->update();
+    }
+
+    public function updateOnDeposit($data)
+    {
+        $currentBalance = $this->bankRepository->setId($data['accountType'])->getBalance();
+        $depositedBalance = (int)$data['amount'];
+        $total = $currentBalance->balance + $depositedBalance;
+
+        return $this->bankRepository->setId($data['accountType'])
+            ->setBalance($total)
+            ->setUpdatedAt(date('Y-m-d H:i:s'))
+            ->updateOnDeposit();
+    }
+
+    public function updateOnWithdraw($data)
+    {
+        $currentBalance = $this->bankRepository->setId($data['accountType'])->getBalance();
+        $withdrawnBalance = (int)$data['amount'];
+        $total = $currentBalance->balance - $withdrawnBalance;
+        if($total < 100) {
+            return false;
+        } else {
+            return $this->bankRepository->setId($data['accountType'])
+                ->setBalance($total)
+                ->setUpdatedAt(date('Y-m-d H:i:s'))
+                ->updateOnWithdraw();
+        }
     }
 
     public function delete($id)
     {
         return $this->bankRepository->setId($id)->delete();
+    }
+
+    public function allAccounts()
+    {
+        return $this->bankRepository->allAccounts();
+    }
+
+    public function getBalance($data)
+    {
+        return $this->bankRepository->setId($data['accountType'])->getBalance();
     }
 
     public function getTableData()
